@@ -1,11 +1,11 @@
 <html>
 	<head>
 		<title>Vappulaskuri</title>
+		<meta charset="UTF-8">
 	</head>
 	<body>
 		<h1>Vappulaskuri</h1>
 		<div id="countdown"></div>
-		<script type="text/javascript" src="http://countdownjs.org/lib/raf/requestAnimationFrame.js"></script>
 		<script type="text/javascript" src="https://cdn.rawgit.com/mckamey/countdownjs/master/countdown.min.js"></script>
 		<script>
 			function update() {
@@ -18,22 +18,24 @@
 
 				var now = new Date();
 				var target;
-
+				var year;
+				
 				if (now.getMonth() == 4 && now.getDate() == 0) { // 1.5. !!!
-					target = now;
-				} else if (now.getMonth() == 3 && now.getDate() == 29 && now.getHours >= 17) { // 30.4. 18:00 !!!
-					target = now;
-				} else if (now.getMonth() > 3) { // nyt on vapun jälkeen
-					target = new Date(now.getFullYear() + 1, 3, 30, 18);
-				} else { // nyt on ennen vappua
-					target = new Date(now.getFullYear() + 1, 3, 30, 18);
+					year = now.getFullYear();
+				} else if (now.getMonth() > 3) { // past April and not 1.5. -> next vappu
+					year = now.getFullYear() + 1;
+				} else { // before 1.5. -> this year
+					year = now.getFullYear();
 				}
 
-				if (target == now) {
-					document.getElementById('countdown').innerHTML = "Nyt !!!"
+				var begin = new Date(year, 3, 30, 12); // 30.4.2016 12:00
+				var end = new Date(year, 4, 1, 23, 59); // 1.5.2016 23:59 
+
+				if (begin < now && now < end) {
+					document.getElementById('countdown').innerHTML = "Nyt on vappu !!!"
 				} else {
 					var cd = countdown(
-						target,
+						begin,
 						function(ts){
 							document.getElementById('countdown').innerHTML = ts.toHTML("strong");
 						},

@@ -2,6 +2,9 @@
 	<head>
 		<title>Vappulaskuri</title>
 		<meta charset="UTF-8">
+		<meta name="description" content="Vappulaskuri: kuinka monta päivää vappuun">
+		<meta name="keywords" content="vappu,juhla,laskuri,countdown,vappuun">
+		<meta name="author" content="Aarno Aukia @aarnoaukia">
 	</head>
 	<body>
 		<h1>Vappulaskuri</h1>
@@ -37,7 +40,7 @@
 					var cd = countdown(
 						begin,
 						function(ts){
-							document.getElementById('countdown').innerHTML = ts.toHTML("strong");
+							document.getElementById('countdown').innerHTML = ts.toHTML("strong") + " vappuun";
 						},
 						countdown.YEARS|countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
 

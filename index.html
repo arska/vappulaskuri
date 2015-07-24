@@ -27,10 +27,10 @@
 					'nyt');
 
 				var now = new Date();
-				var target;
 				var year;
 				
-				if (now.getMonth() == 4 && now.getDate() == 0) { // 1.5. !!!
+				// figure out if it's already after vappu this yeae and we need to track next year
+				if (now.getMonth() == 4 && now.getDate() == 0) { // 1.5. it's vappu now !
 					year = now.getFullYear();
 				} else if (now.getMonth() > 3) { // past April and not 1.5. -> next vappu
 					year = now.getFullYear() + 1;
@@ -38,12 +38,15 @@
 					year = now.getFullYear();
 				}
 
+				// by convention vappu starts at vapunaatto at noon
 				var begin = new Date(year, 3, 30, 12); // 30.4.2016 12:00
 				var end = new Date(year, 4, 1, 23, 59); // 1.5.2016 23:59 
 
 				if (begin < now && now < end) {
+					// vappu is now
 					document.getElementById('countdown').innerHTML = "Nyt on vappu !!!"
 				} else {
+					// vappu has been or is going to be
 					var cd = countdown(
 						begin,
 						function(ts){

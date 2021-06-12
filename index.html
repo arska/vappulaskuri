@@ -12,41 +12,6 @@
 		<meta property="og:image" content="http://vappulaskuri.com/havis.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<!-- Facebook Conversion Code for Views on my page -->
-		<script>(function() {
-			var _fbq = window._fbq || (window._fbq = []);
-			if (!_fbq.loaded) {
-				var fbds = document.createElement('script');
-				fbds.async = true;
-				fbds.src = '//connect.facebook.net/en_US/fbds.js';
-				var s = document.getElementsByTagName('script')[0];
-				s.parentNode.insertBefore(fbds, s);
-				_fbq.loaded = true;
-			}
-		})();
-		window._fbq = window._fbq || [];
-		window._fbq.push(['track', '6027522915500', {'value':'0.01','currency':'EUR'}]);
-		</script>
-		<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6027522915500&amp;cd[value]=0.01&amp;cd[currency]=EUR&amp;noscript=1" /></noscript>
-
-<script>(function() {
-var _fbq = window._fbq || (window._fbq = []);
-if (!_fbq.loaded) {
-var fbds = document.createElement('script');
-fbds.async = true;
-fbds.src = '//connect.facebook.net/en_US/fbds.js';
-var s = document.getElementsByTagName('script')[0];
-s.parentNode.insertBefore(fbds, s);
-_fbq.loaded = true;
-}
-_fbq.push(['addPixelId', '1038915066172521']);
-})();
-window._fbq = window._fbq || [];
-window._fbq.push(['track', 'PixelInitialized', {}]);
-fbq('track', 'ViewContent');
-</script>
-<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=1038915066172521&amp;ev=PixelInitialized" /></noscript>
-
 	</head>
 	<body>
 		<h1>Vappulaskuri</h1>
@@ -54,17 +19,10 @@ fbq('track', 'ViewContent');
 		<script type="text/javascript" src="https://cdn.rawgit.com/mckamey/countdownjs/master/countdown.min.js"></script>
 		<script>
 			function update() {
-				countdown.setLabels(
-					'| sekuntti| minuutti| tunti| päivä',
-					'| sekunttia| minuuttia| tuntia| päivää',
-					' ja ',
-					', ',
-					'nyt');
-
 				var now = new Date();
 				var year;
 				
-				// figure out if it's already after vappu this yeae and we need to track next year
+				// figure out if it's already after vappu this year and we need to track next year
 				if (now.getMonth() == 4 && now.getDate() == 0) { // 1.5. it's vappu now !
 					year = now.getFullYear();
 				} else if (now.getMonth() > 3) { // past April and not 1.5. -> next vappu
@@ -73,40 +31,45 @@ fbq('track', 'ViewContent');
 					year = now.getFullYear();
 				}
 
-				// by convention vappu starts at vapunaatto at noon
-				var begin = new Date(year, 3, 30, 12); // 30.4.2016 12:00
-				var end = new Date(year, 4, 1, 23, 59); // 1.5.2016 23:59 
+				// by convention vappu starts at vapunaatto at midnight
+				var begin = new Date(year, 3, 30, 0); // 30.4.xxxx 00:00
+				var end = new Date(year, 4, 1, 23, 59); // 1.5.xxxx 23:59 
 
-				if (begin < now && now < end) {
+				if (begin < now && now < end) {	
 					// vappu is now
 					document.getElementById('countdown').innerHTML = "Nyt on vappu !!!"
 				} else {
 					// vappu has been or is going to be
+					countdown.setLabels(
+						'| sekuntti| minuutti| tunti| päivä',
+						'| sekunttia| minuuttia| tuntia| päivää',
+						' ja ',
+						', ',
+						'nyt'
+					);
 					var cd = countdown(
 						begin,
 						function(ts){
 							document.getElementById('countdown').innerHTML = ts.toHTML("strong") + " vappuun";
 						},
-						countdown.YEARS|countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
-
+						countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS
+					);
 				}
-
 			}
 			update();
 		</script>
-		<a style="margin-top: 10px;" class="twitter-timeline" href="https://twitter.com/hashtag/vappu" data-widget-id="607594646253015040" width="100%" height="80%">#vappu Tweets</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-		<div style="position: absolute; bottom: 0px;">		
+
+		<div style="position: absolute; bottom: 5px; left: 5px;">
 			Made with &hearts; by <a href="https://twitter.com/aarnoaukia">@aarnoaukia</a> as <a href="https://github.com/arska/vappulaskuri">open source</a>.
 		</div>
-		<script>
-			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-			  ga('create', 'UA-62957812-1', 'auto');
-			  ga('send', 'pageview');
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-8S1MBDVCX2"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-8S1MBDVCX2');
 		</script>
 	</body>
 </html>

@@ -2,7 +2,7 @@ name: Generate OG Image
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Daily at 6 AM UTC (8/9 AM Finnish time)
+    - cron: '0 22 * * *'  # Daily at 22:00 UTC (midnight EET / 1 AM EEST)
   push:
     branches:
       - master

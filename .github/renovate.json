@@ -12,6 +12,10 @@
         "digest"
       ],
       "automerge": true
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "automerge": true
     }
   ]
 }

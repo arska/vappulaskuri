@@ -21,4 +21,5 @@ jobs:
         protocol: ftps
         server-dir: public_html/
         security: strict
-        
+        exclude: |
+          **/.github/**

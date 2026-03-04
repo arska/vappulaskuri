@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="fi">
 	<head>
 		<title>Vappulaskuri</title>
 		<meta charset="UTF-8">
@@ -11,56 +12,343 @@
 		<meta property="og:locale" content="fi_FI" />
 		<meta property="og:image" content="http://vappulaskuri.com/havis.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+		<style>
+			*, *::before, *::after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			html, body {
+				height: 100%;
+				overflow: hidden;
+			}
+
+			body {
+				font-family: 'Outfit', sans-serif;
+				color: #fff;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				min-height: 100vh;
+				background: linear-gradient(170deg, #0b1026 0%, #1a1b4b 25%, #3a2d6e 45%, #6b3a7d 60%, #c2566e 75%, #f0a04b 90%, #fdd870 100%);
+				background-attachment: fixed;
+				position: relative;
+				text-align: center;
+			}
+
+			/* Subtle animated stars in the dark part of the sky */
+			body::before {
+				content: '';
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 50%;
+				background-image:
+					radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.8), transparent),
+					radial-gradient(1px 1px at 25% 8%, rgba(255,255,255,0.6), transparent),
+					radial-gradient(1.5px 1.5px at 40% 22%, rgba(255,255,255,0.9), transparent),
+					radial-gradient(1px 1px at 55% 5%, rgba(255,255,255,0.5), transparent),
+					radial-gradient(1px 1px at 70% 18%, rgba(255,255,255,0.7), transparent),
+					radial-gradient(1.5px 1.5px at 85% 12%, rgba(255,255,255,0.6), transparent),
+					radial-gradient(1px 1px at 15% 35%, rgba(255,255,255,0.4), transparent),
+					radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,0.5), transparent),
+					radial-gradient(1px 1px at 90% 25%, rgba(255,255,255,0.7), transparent),
+					radial-gradient(1px 1px at 35% 40%, rgba(255,255,255,0.3), transparent),
+					radial-gradient(1.5px 1.5px at 5% 10%, rgba(255,255,255,0.8), transparent),
+					radial-gradient(1px 1px at 78% 35%, rgba(255,255,255,0.4), transparent);
+				pointer-events: none;
+				animation: twinkle 4s ease-in-out infinite alternate;
+				z-index: 0;
+			}
+
+			@keyframes twinkle {
+				0% { opacity: 0.6; }
+				100% { opacity: 1; }
+			}
+
+			.lakki {
+				width: 120px;
+				height: auto;
+				margin-bottom: 1.5rem;
+				filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3));
+				animation: floatIn 1s ease-out both;
+				position: relative;
+				z-index: 1;
+			}
+
+			@keyframes floatIn {
+				from {
+					opacity: 0;
+					transform: translateY(-40px) rotate(-10deg);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0) rotate(0deg);
+				}
+			}
+
+			h1 {
+				font-family: 'DM Serif Display', serif;
+				font-size: clamp(2.5rem, 8vw, 5rem);
+				font-weight: 400;
+				letter-spacing: 0.02em;
+				text-shadow: 0 2px 30px rgba(0,0,0,0.3);
+				margin-bottom: 2.5rem;
+				animation: fadeUp 0.8s ease-out 0.2s both;
+				position: relative;
+				z-index: 1;
+			}
+
+			@keyframes fadeUp {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			#countdown {
+				position: relative;
+				z-index: 1;
+				animation: fadeUp 0.8s ease-out 0.4s both;
+			}
+
+			.countdown-grid {
+				display: flex;
+				gap: clamp(0.8rem, 3vw, 2rem);
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+
+			.countdown-unit {
+				background: rgba(255, 255, 255, 0.08);
+				backdrop-filter: blur(20px);
+				-webkit-backdrop-filter: blur(20px);
+				border: 1px solid rgba(255, 255, 255, 0.15);
+				border-radius: 16px;
+				padding: clamp(1rem, 3vw, 1.8rem) clamp(1.2rem, 4vw, 2.5rem);
+				min-width: clamp(80px, 18vw, 140px);
+				transition: transform 0.3s ease;
+			}
+
+			.countdown-unit:hover {
+				transform: translateY(-4px);
+				background: rgba(255, 255, 255, 0.12);
+			}
+
+			.countdown-value {
+				font-size: clamp(2.2rem, 8vw, 4.5rem);
+				font-weight: 800;
+				line-height: 1;
+				display: block;
+				font-variant-numeric: tabular-nums;
+				background: linear-gradient(180deg, #fff 40%, rgba(255,255,255,0.6));
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+			}
+
+			.countdown-label {
+				font-size: clamp(0.7rem, 2vw, 0.95rem);
+				font-weight: 300;
+				text-transform: uppercase;
+				letter-spacing: 0.15em;
+				margin-top: 0.5rem;
+				display: block;
+				opacity: 0.7;
+			}
+
+			.suffix {
+				font-family: 'DM Serif Display', serif;
+				font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+				margin-top: 2rem;
+				opacity: 0.85;
+				letter-spacing: 0.05em;
+			}
+
+			.vappu-now {
+				font-family: 'DM Serif Display', serif;
+				font-size: clamp(2rem, 7vw, 4.5rem);
+				text-shadow: 0 0 40px rgba(253, 216, 112, 0.5);
+				animation: celebrate 1.5s ease-in-out infinite alternate;
+			}
+
+			@keyframes celebrate {
+				0% {
+					transform: scale(1);
+					text-shadow: 0 0 40px rgba(253, 216, 112, 0.5);
+				}
+				100% {
+					transform: scale(1.05);
+					text-shadow: 0 0 60px rgba(253, 216, 112, 0.8), 0 0 100px rgba(240, 160, 75, 0.3);
+				}
+			}
+
+			.confetti-container {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				pointer-events: none;
+				overflow: hidden;
+				z-index: 0;
+			}
+
+			.confetti {
+				position: absolute;
+				width: 10px;
+				height: 10px;
+				top: -10px;
+				animation: confettiFall linear infinite;
+			}
+
+			@keyframes confettiFall {
+				to {
+					transform: translateY(100vh) rotate(720deg);
+				}
+			}
+
+			.footer {
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				padding: 1rem;
+				text-align: center;
+				font-size: 0.8rem;
+				opacity: 0.5;
+				font-weight: 300;
+				z-index: 1;
+				transition: opacity 0.3s;
+			}
+
+			.footer:hover {
+				opacity: 0.8;
+			}
+
+			.footer a {
+				color: #fdd870;
+				text-decoration: none;
+				border-bottom: 1px solid rgba(253, 216, 112, 0.3);
+				transition: border-color 0.3s;
+			}
+
+			.footer a:hover {
+				border-color: rgba(253, 216, 112, 0.8);
+			}
+		</style>
 	</head>
 	<body>
+		<img src="yolakki.svg" alt="Ylioppilaslakki" class="lakki">
+
 		<h1>Vappulaskuri</h1>
 		<div id="countdown"></div>
-		<script type="text/javascript" src="https://cdn.rawgit.com/mckamey/countdownjs/master/countdown.min.js"></script>
+
 		<script>
+			function pad(n) {
+				return n < 10 ? '0' + n : n;
+			}
+
+			function createConfetti() {
+				var container = document.createElement('div');
+				container.className = 'confetti-container';
+				document.body.appendChild(container);
+
+				var colors = ['#fdd870', '#ff6b8a', '#4ecdc4', '#fff', '#f0a04b', '#a78bfa', '#fb923c'];
+
+				for (var i = 0; i < 60; i++) {
+					var piece = document.createElement('div');
+					piece.className = 'confetti';
+					piece.style.left = Math.random() * 100 + '%';
+					piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+					piece.style.animationDuration = (3 + Math.random() * 4) + 's';
+					piece.style.animationDelay = Math.random() * 5 + 's';
+					piece.style.width = (6 + Math.random() * 8) + 'px';
+					piece.style.height = (6 + Math.random() * 8) + 'px';
+					piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+					piece.style.opacity = 0.7 + Math.random() * 0.3;
+					container.appendChild(piece);
+				}
+			}
+
+			var confettiCreated = false;
+
+			function buildCountdownHTML(days, hours, minutes, seconds) {
+				return '<div class="countdown-grid">' +
+					'<div class="countdown-unit">' +
+						'<span class="countdown-value">' + days + '</span>' +
+						'<span class="countdown-label">' + (days === 1 ? 'päivä' : 'päivää') + '</span>' +
+					'</div>' +
+					'<div class="countdown-unit">' +
+						'<span class="countdown-value">' + pad(hours) + '</span>' +
+						'<span class="countdown-label">' + (hours === 1 ? 'tunti' : 'tuntia') + '</span>' +
+					'</div>' +
+					'<div class="countdown-unit">' +
+						'<span class="countdown-value">' + pad(minutes) + '</span>' +
+						'<span class="countdown-label">' + (minutes === 1 ? 'minuutti' : 'minuuttia') + '</span>' +
+					'</div>' +
+					'<div class="countdown-unit">' +
+						'<span class="countdown-value">' + pad(seconds) + '</span>' +
+						'<span class="countdown-label">' + (seconds === 1 ? 'sekuntti' : 'sekuntia') + '</span>' +
+					'</div>' +
+				'</div>' +
+				'<div class="suffix">vappuun</div>';
+			}
+
 			function update() {
 				var now = new Date();
 				var year;
-				
-				// figure out if it's already after vappu this year and we need to track next year
-				if (now.getMonth() == 4 && now.getDate() == 0) { // 1.5. it's vappu now !
+
+				if (now.getMonth() == 4 && now.getDate() == 0) {
 					year = now.getFullYear();
-				} else if (now.getMonth() > 3) { // past April and not 1.5. -> next vappu
+				} else if (now.getMonth() > 3) {
 					year = now.getFullYear() + 1;
-				} else { // before 1.5. -> this year
+				} else {
 					year = now.getFullYear();
 				}
 
-				// by convention vappu starts at vapunaatto at midnight
-				var begin = new Date(year, 3, 30, 0); // 30.4.xxxx 00:00
-				var end = new Date(year, 4, 1, 23, 59); // 1.5.xxxx 23:59 
+				var begin = new Date(year, 3, 30, 0);
+				var end = new Date(year, 4, 1, 23, 59);
 
-				if (begin < now && now < end) {	
-					// vappu is now
-					document.getElementById('countdown').innerHTML = "Nyt on vappu !!!"
+				var el = document.getElementById('countdown');
+
+				if (begin < now && now < end) {
+					el.textContent = '';
+					var div = document.createElement('div');
+					div.className = 'vappu-now';
+					div.textContent = 'Nyt on vappu!!!';
+					el.appendChild(div);
+					if (!confettiCreated) {
+						createConfetti();
+						confettiCreated = true;
+					}
 				} else {
-					// vappu has been or is going to be
-					countdown.setLabels(
-						'| sekuntti| minuutti| tunti| päivä',
-						'| sekunttia| minuuttia| tuntia| päivää',
-						' ja ',
-						', ',
-						'nyt'
-					);
-					var cd = countdown(
-						begin,
-						function(ts){
-							document.getElementById('countdown').innerHTML = ts.toHTML("strong") + " vappuun";
-						},
-						countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS
-					);
+					var diff = begin - now;
+					var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+					var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+					var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+					el.innerHTML = buildCountdownHTML(days, hours, minutes, seconds);
 				}
 			}
+
 			update();
+			setInterval(update, 1000);
 		</script>
 
-		<div style="position: absolute; bottom: 5px; left: 5px;">
-			Made with &hearts; by <a href="https://twitter.com/aarnoaukia">@aarnoaukia</a> as <a href="https://github.com/arska/vappulaskuri">open source</a>.
+		<div class="footer">
+			Made with &hearts; by <a href="https://twitter.com/aarnoaukia">@aarnoaukia</a> &middot; <a href="https://github.com/arska/vappulaskuri">open source</a>
 		</div>
 
 		<!-- Global site tag (gtag.js) - Google Analytics -->

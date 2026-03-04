@@ -1,0 +1,42 @@
+name: Generate OG Image
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6 AM UTC (8/9 AM Finnish time)
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  generate-og:
+    name: Generate and deploy OG image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install pillow cairosvg
+
+      - name: Generate OG image
+        run: python generate-og.py
+
+      - name: Upload OG image via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          protocol: ftps
+          server-dir: public_html/
+          security: strict
+          local-dir: ./
+          exclude: |
+            **/*
+            !og-image.png

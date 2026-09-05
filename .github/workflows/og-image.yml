@@ -6,11 +6,12 @@ on:
   push:
     branches:
       - master
+  pull_request:
   workflow_dispatch:
 
 jobs:
   generate-og:
-    name: Generate and deploy OG image
+    name: Generate OG image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -27,7 +28,27 @@ jobs:
       - name: Generate OG image
         run: python generate-og.py
 
+      - name: Verify generated image
+        run: |
+          python - <<'EOF'
+          from PIL import Image
+
+          img = Image.open("og-image.png")
+          assert img.size == (1200, 630), f"unexpected size: {img.size}"
+          assert img.mode == "RGB", f"unexpected mode: {img.mode}"
+          colors = img.getcolors(maxcolors=100000)
+          assert colors is None or len(colors) > 100, "image looks blank"
+          print(f"og-image.png OK: {img.width}x{img.height} {img.mode}")
+          EOF
+
+      - name: Upload OG image as artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: og-image
+          path: og-image.png
+
       - name: Upload OG image via FTP
+        if: github.event_name != 'pull_request'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_HOST }}
